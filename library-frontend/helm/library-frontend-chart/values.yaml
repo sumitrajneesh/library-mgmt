@@ -1,0 +1,39 @@
+replicaCount: 1
+
+image:
+  repository: your-docker-registry-or-dockerhub-username/library-frontend # This will be overridden by Jenkinsfile
+  pullPolicy: IfNotPresent
+  tag: "latest" # This will be overridden by Jenkinsfile
+
+service:
+  type: ClusterIP
+  port: 80 # Nginx default port
+
+ingress:
+  enabled: true # Enable ingress for external access
+  className: nginx
+  annotations:
+    # kubernetes.io/ingress.class: nginx # Not needed if className is set
+    # cert-manager.io/cluster-issuer: letsencrypt-prod # Uncomment for HTTPS with cert-manager
+  hosts:
+    - host: library.yourdomain.com # Replace with your actual domain
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: library-tls
+  #    hosts:
+  #      - library.yourdomain.com
+
+env: # Environment variables for the React app
+  REACT_APP_BOOK_API_URL: "/api/books" # Default, overridden by Jenkinsfile
+  REACT_APP_USER_API_URL: "/api/users"
+  REACT_APP_LOAN_API_URL: "/api/loans"
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
