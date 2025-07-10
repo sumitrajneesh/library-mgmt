@@ -3,7 +3,7 @@
 
 
 
-.
+```.
 ├── library-frontend/                  <-- Git Repository 1: React Frontend
 │   ├── public/
 │   │   └── index.html
@@ -88,3 +88,4 @@
                 ├── deployment.yaml
                 └── service.yaml
                 └── secret.yaml
+                ```
