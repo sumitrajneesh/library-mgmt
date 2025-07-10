@@ -1,6 +1,14 @@
 # Library managment service
 
+1. Full CI/CD Pipeline for a Microservices App
+2. Tech Stack: Jenkins + Spring Boot + PostgreSQL + Docker
+Scenario:
+* Multi-branch pipeline using Jenkinsfile
+* Unit testing, code quality checks (SonarQube), Docker image build
+* Push to Docker Hub or GitLab Container Registry
+* Auto-deploy to a staging Kubernetes cluster using Helm
 
+## ✅ Skills: Multi-stage pipelines, parallel builds, shared libraries, Docker, GitOps
 
 
 ```.
