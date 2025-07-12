@@ -2,11 +2,11 @@
 // This file should be placed at the root of the loan-service repository.
 
 // Define global environment variables
-def dockerRegistry = "your-docker-registry-or-dockerhub-username"
-def dockerCredentialsId = "docker-hub-credentials"
-def sonarqubeServerId = "sonarqube-server"
-def kubernetesCredentialsId = "kubernetes-credentials"
-def kubernetesContext = "your-k8s-cluster-context"
+def dockerRegistry = "sumitrajneesh" // e.g., "myusername"
+def dockerCredentialsId = "3bdc9f350d0642d19dec3a60aa1875b4" // Jenkins credential ID for Docker Hub/GitLab Registry
+def sonarqubeServerId = "sonarqube-server" // Jenkins SonarQube server configuration ID
+def kubernetesCredentialsId = "kubernetes-credentials" // Jenkins credential ID for Kubernetes access (e.g., Kubeconfig)
+def kubernetesContext = "minikube" 
 def helmChartPath = "helm/loan-service-chart"
 
 pipeline {
