@@ -15,31 +15,31 @@ spec:
         {{- include "loan-service-chart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        - name: {{ include "loan-service-chart.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}" # Use values from values.yaml
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.port }} # Use service port from values.yaml
               protocol: TCP
           env:
             - name: DB_HOST
-              value: {{ .Values.db.host | quote }}
+              value: {{ .Values.database.host | quote }} # Use value from values.yaml
             - name: DB_PORT
-              value: {{ .Values.db.port | quote }}
+              value: {{ .Values.database.port | quote }} # Use value from values.yaml
             - name: DB_NAME
-              value: {{ .Values.db.name | quote }}
+              value: {{ .Values.database.name | quote }} # Use value from values.yaml
             - name: DB_USER
-              value: {{ .Values.db.user | quote }}
+              value: {{ .Values.database.user | quote }} # Use value from values.yaml
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: loan-db-secret # Name of the Kubernetes Secret for loan service
+                  name: loan-db-secret # Ensure this secret exists in your K8s cluster
                   key: DB_PASSWORD
             - name: BOOK_SERVICE_URL
-              value: {{ .Values.book.service.url | quote }}
+              value: {{ .Values.bookServiceUrl | quote }} # Use value from values.yaml
             - name: USER_SERVICE_URL
-              value: {{ .Values.user.service.url | quote }}
+              value: {{ .Values.userServiceUrl | quote }} # Use value from values.yaml
           livenessProbe:
             httpGet:
               path: /api/loans/health

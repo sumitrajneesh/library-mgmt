@@ -1,7 +1,11 @@
+# Add these two lines at the very top of your values.yaml file
+nameOverride: ""
+fullnameOverride: ""
+
 replicaCount: 1
 
 image:
-  repository: your-docker-registry-or-dockerhub-username/library-frontend # This will be overridden by Jenkinsfile
+  repository: sumitrajneesh/library-frontend # This will be overridden by Jenkinsfile
   pullPolicy: IfNotPresent
   tag: "latest" # This will be overridden by Jenkinsfile
 

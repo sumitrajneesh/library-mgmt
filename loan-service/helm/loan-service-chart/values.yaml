@@ -1,27 +1,44 @@
+nameOverride: ""
+fullnameOverride: ""
+
 replicaCount: 1
 
 image:
-  repository: your-docker-registry-or-dockerhub-username/loan-service
+  repository: sumitrajneesh/loan-service # Your actual Docker image
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "latest" # Or a specific version
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 8080 # Loan service's application port
 
-db:
-  host: ""
+# Database connection details (for Kubernetes deployment)
+database:
+  host: loan-service-postgresql # Replace with the actual Kubernetes Service name for your loan-db PostgreSQL
   port: "5432"
-  name: ""
-  user: ""
-  password: ""
+  name: loan_db # Your database name
+  user: loanuser # Your database user
+  # password will be fetched from a secret, as defined in deployment.yaml
 
-# Inter-service communication URLs (will be overridden by Jenkinsfile)
-book:
-  service:
-    url: "http://book-service:8080/api/books"
-user:
-  service:
-    url: "http://user-service:8080/api/users"
+# Inter-service communication URLs (for Kubernetes deployment)
+# These should point to the Kubernetes Service names of the other microservices
+bookServiceUrl: http://book-service:8080/api/books
+userServiceUrl: http://user-service:8081/api/users # Assuming user-service runs on 8081
+
+# You might also want to add these if they are not already in your values.yaml
+# livenessProbe:
+#   path: /api/loans/health
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
+# readinessProbe:
+#   path: /api/loans/health
+#   initialDelaySeconds: 10
+#   periodSeconds: 5
 
 resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
